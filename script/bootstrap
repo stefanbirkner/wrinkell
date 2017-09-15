@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# script/bootstrap: Resolve all dependencies that the application requires to
+#                   run.
+
+set -e
+
+program_is_installed() {
+  hash $1 >/dev/null 2>&1
+}
+
+install_elm() {
+  echo "==> Installing Elm…"
+  npm install -g elm
+}
+
+ensure_elm_is_installed() {
+  program_is_installed elm \
+    || install_elm
+}
+
+cd "$(dirname "$0")/.."
+
+ensure_elm_is_installed
